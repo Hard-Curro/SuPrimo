@@ -1,4 +1,4 @@
-let IDCarrito = 0;
+let IDCarrito = 49;
 (function () {
   const carritoContainer = document.querySelector("#carrito");
   const listaCarrito = document.querySelector("#lista-carrito tbody");

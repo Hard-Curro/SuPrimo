@@ -13,6 +13,7 @@ registerForm.addEventListener('submit', async (e) => {
   const lat = document.querySelector('#lat').value;
   const long = document.querySelector('#long').value;
   const phone = document.querySelector('#phone').value;
+  let nextUserId = 50;
 
   const newUser = {
     email: email,
@@ -34,6 +35,8 @@ registerForm.addEventListener('submit', async (e) => {
     },
     phone: phone
   };
+  // Asigna el ID y luego incrementa el valor para el próximo usuario
+newUser.id = nextUserId++;
 
   try {
     let response = await fetch('https://fakestoreapi.com/users', {
@@ -58,6 +61,7 @@ registerForm.addEventListener('submit', async (e) => {
       }
       Users.push(newUser);
       localStorage.setItem('users', JSON.stringify(Users));
+
       alert('Usuario creado exitosamente');
       window.location.href = 'login.html';
     } else {

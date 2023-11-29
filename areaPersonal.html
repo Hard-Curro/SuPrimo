@@ -25,16 +25,12 @@
                             <a href="areaPersonal.html" class="menu__link menu__link--inside">Datos</a>
                         </li>
                         <li class="menu__inside">
-                            <a href="#" class="menu__link menu__link--inside">Admin</button></a>
+                            <a href="admin.html" class="menu__link menu__link--inside">Admin</button></a>
                         </li>
                         <li class="menu__inside">
                             <a href="#" class="menu__link menu__link--inside" id="logoutButton">Logout</button></a>
                         </li>
                     </ul>
-                </li>
-    
-                <li class="menu__item">
-                    <a href="#" class="menu__link">Carrito</a>
                 </li>
     
 
@@ -51,6 +47,49 @@
     <h1>AREA PERSONAL</h1>
     <div id="user-info"></div>
     <button id="deleteButton">Eliminar Usuario</button>
+
+    <h1>Modificar Usuario</h1>
+    <form id="userForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" required><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required><br>
+
+        <label for="street">Street:</label>
+        <input type="text" id="street" name="street" required><br>
+
+        <label for="number">Number:</label>
+        <input type="text" id="number" name="number" required><br>
+
+        <label for="zipcode">Zip Code:</label>
+        <input type="text" id="zipcode" name="zipcode" required><br>
+
+        <label for="lat">Latitude:</label>
+        <input type="text" id="lat" name="lat" required><br>
+
+        <label for="long">Longitude:</label>
+        <input type="text" id="long" name="long" required><br>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required><br>
+
+        <button type="button" onclick="modifyUser()">Modificar Usuario</button>
+    </form>
+    
+        <div id="resultados-container" class="result-container"></div>
 
     <script src="js/logout.js"></script>
     <script src="js/areaPersonal.js"></script>

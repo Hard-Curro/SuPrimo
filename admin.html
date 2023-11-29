@@ -25,16 +25,12 @@
                             <a href="areaPersonal.html" class="menu__link menu__link--inside">Datos</a>
                         </li>
                         <li class="menu__inside">
-                            <a href="#" class="menu__link menu__link--inside">Admin</button></a>
+                            <a href="admin.html" class="menu__link menu__link--inside">Admin</button></a>
                         </li>
                         <li class="menu__inside">
                             <a href="#" class="menu__link menu__link--inside" id="logoutButton">Logout</button></a>
                         </li>
                     </ul>
-                </li>
-    
-                <li class="menu__item">
-                    <a href="#" class="menu__link">Carrito</a>
                 </li>
     
 
@@ -48,31 +44,39 @@
       
     </nav>
 
-    <div id="product-details"></div>
+    <div>
 
-    <h2>Editar Producto</h2>
+        <button onclick="consultarTodos()">Consultar Todos</button>
+      </div>
+      <div>
+        <label for="numeroCarrito">Ingrese un número de carrito:</label>
+        <input type="number" id="numeroCarrito">
+        <button onclick="consultarPorNumero()">Consultar por Número de Carrito</button>
+      </div>
+      <div>
+        <label for="numeroLimit">Ingrese un número para limitar:</label>
+        <input type="number" id="numeroLimit">
+        <button onclick="consultarConLimite()">Consultar con Límite</button>
+      </div>
+      <div>
+        <label for="fechaInicio">Fecha de inicio:</label>
+        <input type="date" id="fechaInicio">
+        <label for="fechaFin">Fecha de fin:</label>
+        <input type="date" id="fechaFin">
+        <button onclick="consultarPorRangoFecha()">Consultar por Rango de Fechas</button>
+      </div>
+    
+      <div class="container" id="resultados"></div>
 
-    <form id="productForm">
-        <label for="title">Título:</label>
-        <input type="text" id="title" name="title" required><br>
+      <h2>Users</h2>
+      <div>
+        <label for="numeroLimit">Ingrese un número para limitar:</label>
+        <input type="number" id="numeroLimite">
+        <button onclick="consultarUsersConLimite()">Consultar con Límite</button>
+      </div>
+    
+      <div id="resultado"></div>
 
-        <label for="price">Precio:</label>
-        <input type="number" id="price" name="price" step="0.01" required><br>
-
-        <label for="description">Descripción:</label>
-        <textarea id="description" name="description" required></textarea><br>
-
-        <label for="image">URL de la Imagen:</label>
-        <input type="url" id="image" name="image" value="https://i.pravatar.cc" readonly><br>
-
-        <label for="category">Categoría:</label>
-        <input type="text" id="category" name="category" value="electronics" readonly><br>
-
-        <button type="button" onclick="updateProduct()">Actualizar Producto</button>
-    </form>
-
-    <script src="js/logout.js"></script>
-    <script src="js/product.js"></script>
-    <script src="js/menu.js"></script>
+    <script src="js/admin.js"></script>
 </body>
 </html>

@@ -113,3 +113,56 @@ if (!productoEncontrado) {
   });
 
 }
+
+function updateProduct() {
+  const productData = {
+      title: document.getElementById('title').value,
+      price: parseFloat(document.getElementById('price').value),
+      description: document.getElementById('description').value,
+      image: document.getElementById('image').value,
+      category: document.getElementById('category').value,
+  };
+
+  fetch(`https://fakestoreapi.com/products/${productId}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      title: 'test product',
+      price: 13.5,
+      description: 'lorem ipsum set',
+      image: 'https://i.pravatar.cc',
+      category: 'electronic'
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Extraer la ID del producto actualizado
+      const id = data.id;
+  
+      // Segunda solicitud GET para obtener la información actualizada del producto
+      fetch(`https://fakestoreapi.com/products/${id}`)
+        .then(response => response.json())
+        .then(updatedProduct => {
+          const title = updatedProduct.title;
+          // Almacenar el resultado en localStorage con la clave "productsDeleted"
+          var deletedGuardados = JSON.parse(localStorage.getItem('productsDeleted')) || [];
+          deletedGuardados.push(title);
+          localStorage.setItem('productsDeleted', JSON.stringify(deletedGuardados));
+          console.log('Producto actualizado almacenado en localStorage:', updatedProduct);
+          location.reload();
+        })
+        .catch(error => console.error('Error al obtener el producto actualizado:', error));
+    })
+
+
+  // Guardar la información específica del producto en localStorage
+  localStorage.setItem(`${productId}`, JSON.stringify(productData));
+
+  var productosGuardados = JSON.parse(localStorage.getItem('productos')) || [];
+  productosGuardados.push(productData);
+  localStorage.setItem('productos', JSON.stringify(productosGuardados));
+
+
+}

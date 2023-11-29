@@ -1,4 +1,14 @@
-let IDCarrito = 49;
+var IDCarrito = 49;
+
+for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+
+    if (key.startsWith("Carrito")) {
+        const value = localStorage.getItem(key);
+        IDCarrito ++;
+    }
+}
+
 (function () {
   const carritoContainer = document.querySelector("#carrito");
   const listaCarrito = document.querySelector("#lista-carrito tbody");
@@ -40,7 +50,10 @@ let IDCarrito = 49;
   }
 
   function confirmarCompra() {
+    const lastIdCard = localStorage.getItem("lastIdCard") || 0;
     IDCarrito++;
+    const newIdCard = IDCarrito;
+    localStorage.setItem("lastIdCard", newIdCard);
 
     // Obtén la fecha actual en formato YYYY-MM-DD
     const fechaActual = new Date().toISOString().split("T")[0];
@@ -111,7 +124,7 @@ let IDCarrito = 49;
   }
 
   function actualizarCarrito() {
-    listaCarrito.innerHTML = "";
+    listaCarrito.textContent = "";
 
     let totalPrecio = 0;
 
@@ -120,27 +133,62 @@ let IDCarrito = 49;
       const precioPorUnidad = parseFloat(curso.precio);
       const subtotal = precioPorUnidad * curso.cantidad;
       totalPrecio += subtotal;
-
-      filaCarrito.innerHTML = `
-        <td>
-          <img src="${curso.imagen}" width="100" alt="${curso.nombre}" />
-        </td>
-        <td>${curso.nombre}</td>
-        <td>${precioPorUnidad.toFixed(2)}$</td>
-        <td>
-          <button class="restar-curso" data-id="${curso.id}">-</button>
-          ${curso.cantidad}
-          <button class="sumar-curso" data-id="${curso.id}">+</button>
-        </td>
-        <td>${subtotal.toFixed(2)}$</td>
-        <td>
-          <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
-        </td>
-      `;
-
+    
+      // Crear elementos y establecer atributos y contenido de texto
+      const imgTd = document.createElement("td");
+      const img = document.createElement("img");
+      img.src = curso.imagen;
+      img.width = 100;
+      img.alt = curso.nombre;
+      imgTd.appendChild(img);
+    
+      const nombreTd = document.createElement("td");
+      nombreTd.textContent = curso.nombre;
+    
+      const precioTd = document.createElement("td");
+      precioTd.textContent = `${precioPorUnidad.toFixed(2)}€`;
+    
+      const cantidadTd = document.createElement("td");
+      const restarBtn = document.createElement("button");
+      restarBtn.className = "restar-curso";
+      restarBtn.setAttribute("data-id", curso.id);
+      restarBtn.textContent = "-";
+      
+      const cantidadTexto = document.createTextNode(curso.cantidad);
+    
+      const sumarBtn = document.createElement("button");
+      sumarBtn.className = "sumar-curso";
+      sumarBtn.setAttribute("data-id", curso.id);
+      sumarBtn.textContent = "+";
+    
+      cantidadTd.appendChild(restarBtn);
+      cantidadTd.appendChild(cantidadTexto);
+      cantidadTd.appendChild(sumarBtn);
+    
+      const subtotalTd = document.createElement("td");
+      subtotalTd.textContent = `${subtotal.toFixed(2)}€`;
+    
+      const borrarTd = document.createElement("td");
+      const borrarLink = document.createElement("a");
+      borrarLink.href = "#";
+      borrarLink.className = "borrar-curso";
+      borrarLink.setAttribute("data-id", curso.id);
+      borrarLink.textContent = "X";
+      borrarTd.appendChild(borrarLink);
+    
+      // Agregar celdas a la fila
+      filaCarrito.appendChild(imgTd);
+      filaCarrito.appendChild(nombreTd);
+      filaCarrito.appendChild(precioTd);
+      filaCarrito.appendChild(cantidadTd);
+      filaCarrito.appendChild(subtotalTd);
+      filaCarrito.appendChild(borrarTd);
+    
+      // Agregar la fila al cuerpo de la tabla
       listaCarrito.appendChild(filaCarrito);
     });
+    
 
-    precioTotal.textContent = `${totalPrecio.toFixed(2)}$`;
+    precioTotal.textContent = `${totalPrecio.toFixed(2)}€`;
   }
 })();

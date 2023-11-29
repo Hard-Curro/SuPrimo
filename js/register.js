@@ -1,10 +1,6 @@
-// Primero cogemos los datos del formulario
 const registerForm = document.querySelector('#registerForm');
-// Agregamos el evento submit
 registerForm.addEventListener('submit', async (e) => {
-  // Recibimos el evento y llamamos a la función preventDefault para que no se recargue la página
   e.preventDefault();
-  // Obtenemos los datos del formulario
   const email = document.querySelector('#email').value;
   const username = document.querySelector('#username').value;
   const password = document.querySelector('#password').value;
@@ -17,47 +13,46 @@ registerForm.addEventListener('submit', async (e) => {
   const lat = document.querySelector('#lat').value;
   const long = document.querySelector('#long').value;
   const phone = document.querySelector('#phone').value;
-  // Vamos a crear el localStorage donde se van a almacenar los usuarios
-  let Users = JSON.parse(localStorage.getItem('users')) || [];
-  // Verificamos si el usuario ya existe en el localStorage
-  const isUserRegistered = Users.some((user) => user.email === email);
-  if (isUserRegistered) {
-    return alert('El usuario ya está registrado');
-  }
-  // Agregamos el usuario creado manualmente al localStorage
+
   const newUser = {
     email: email,
     username: username,
     password: password,
-    firstname: firstname,
-    lastname: lastname,
-    city: city,
-    street: street,
-    number: number,
-    zipcode: zipcode,
-    lat: lat,
-    long: long,
-    phone: phone,
-  };
-  Users.push(newUser);
-  // Obtenemos los usuarios de la API
-  try {
-    const response = await fetch('https://fakestoreapi.com/users');
-    const apiUsers = await response.json();
-    // Agregamos los usuarios de la API al localStorage sin duplicados
-    apiUsers.forEach((apiUser) => {
-      const isApiUserRegistered = Users.some(
-        (user) => user.email === apiUser.email
-      );
-      if (!isApiUserRegistered) {
-        Users.push(apiUser);
+    name: {
+      firstname: firstname,
+      lastname: lastname
+    },
+    address: {
+      city: city,
+      street: street,
+      number: parseInt(number),
+      zipcode: zipcode,
+      geolocation: {
+        lat: lat,
+        long: long
       }
-    });
+    },
+    phone: phone
+  };
+
+  try {
+    let Users = JSON.parse(localStorage.getItem('users')) || [];
+    let UsersDeleted = JSON.parse(localStorage.getItem('usersDeleted')) || [];
+    const isUserRegistered = Users.some((user) => user.email === email);
+    if (isUserRegistered) {
+      return alert('El usuario ya está registrado');
+    }
+    const deletedUserIndex = UsersDeleted.findIndex((user) => user.email === email);
+    if (deletedUserIndex !== -1) {
+      UsersDeleted.splice(deletedUserIndex, 1);
+      localStorage.setItem('usersDeleted', JSON.stringify(UsersDeleted));
+    }
+    Users.push(newUser);
     localStorage.setItem('users', JSON.stringify(Users));
-    alert('Registro completado');
-    // Redirigimos al login
+    alert('Usuario creado exitosamente');
     window.location.href = 'login.html';
   } catch (error) {
-    console.error('Error al obtener los usuarios de la API:', error);
+    console.log('Error en la solicitud:', error);
+    alert('Error en la solicitud');
   }
 });

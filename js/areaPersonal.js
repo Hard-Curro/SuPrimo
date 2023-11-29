@@ -119,11 +119,53 @@ fetch(`https://fakestoreapi.com/carts/user/${id}`)
                     carritoCard.classList.toggle('expanded');
                 });
             });
+            
         } else {
             console.error('La respuesta de la API de carritos no contiene datos válidos.');
         }
     })
     .catch(error => console.error('Error en la solicitud:', error));
+
+
+// Obtener el contenedor donde se mostrarán las tarjetas
+const container = document.getElementById('resultados-container2');
+
+var lastProductId = localStorage.getItem("lastProductId");
+// Supongamos que tienes los carritos almacenados en el localStorage con nombres como "Carrito1", "Carrito2", etc.
+for (let i = 50; i <= lastProductId; i++) {
+    const carritoKey = "Carrito " + i;
+
+    // Obtener el elemento de localStorage
+    const Carrito = JSON.parse(localStorage.getItem(carritoKey));
+
+    // Acceder a la propiedad userId
+    const userId = Carrito.userId;
+
+    if (userId === usersData.id) {
+        const carritoCard2 = document.createElement('div');
+        carritoCard2.classList.add('carritoCard2');
+
+        // Añade contenido a la tarjeta (puedes personalizar esto según tus datos)
+        carritoCard2.innerHTML = `
+            <p>ID: ${Carrito.id}</p>
+            <p>Fecha: ${Carrito.date}</p>
+            <div class="card-content">
+                <p>Productos: ${Carrito.products}</p>
+            </div>
+        `;
+
+        // Agrega la tarjeta al contenedor
+        container.appendChild(carritoCard2);
+
+        // Agrega el evento clic para expandir la tarjeta
+        carritoCard2.addEventListener('click', () => {
+            carritoCard2.classList.toggle('expanded');
+        });
+    }
+}
+
+    
+
 
     // Obtener el usuario actual de sessionStorage
 const currentUser = JSON.parse(sessionStorage.getItem('users'));
@@ -184,7 +226,7 @@ function modifyUser() {
     .catch(error => console.error('Error:', error));
 }
 
-
+    
     
 
 

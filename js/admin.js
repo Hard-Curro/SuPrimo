@@ -167,3 +167,69 @@ function mostrarResultadoEnTarjeta(carrito) {
       resultadoDiv.appendChild(card);
     });
   }
+
+  function AñadirProducto() {
+    // Obtener los valores del formulario
+    const userId = document.getElementById('userId').value;
+    const date = document.getElementById('date').value;
+    const productId = document.getElementById('productId').value;
+    const quantity = document.getElementById('quantity').value;
+
+    // Crear el objeto de datos
+    const data = {
+        userId: userId,
+        date: date,
+        products: [{ productId: productId, quantity: quantity }]
+    };
+
+    // Realizar la solicitud fetch
+    fetch('https://fakestoreapi.com/carts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        localStorage.setItem('cardMod', JSON.stringify(data));
+        eliminarCarrito(userId);
+        
+    })
+    .catch(error => {
+        console.error('Error al enviar la solicitud:', error);
+    });
+}
+
+function EditarProducto() {
+  // Obtener los valores del formulario
+  const userId = document.getElementById('userId').value;
+  const date = document.getElementById('date').value;
+  const productId = document.getElementById('productId').value;
+  const quantity = document.getElementById('quantity').value;
+
+  // Crear el objeto de datos
+  const data = {
+      userId: userId,
+      date: date,
+      products: [{ productId: productId, quantity: quantity }]
+  };
+
+  // Realizar la solicitud fetch
+  fetch(`https://fakestoreapi.com/carts/${userId}`, {
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+      localStorage.setItem('cardMod', JSON.stringify(data));
+      eliminarCarrito(userId);
+      
+  })
+  .catch(error => {
+      console.error('Error al enviar la solicitud:', error);
+  });
+}

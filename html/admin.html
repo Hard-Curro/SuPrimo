@@ -51,6 +51,7 @@
     <div>
 
         <button onclick="consultarTodos()">Consultar Todos</button>
+        <button onclick="mostrarCarritosInversa()">Mostrar Carritos en Orden Inverso</button>
       </div>
       <div>
         <label for="numeroCarrito">ID del carrito:</label>
@@ -92,10 +93,12 @@
     
 
       <h1>Usuarios</h1>
+      
       <div>
         <label for="numeroLimit">Cantidad de usuarios a ver:</label>
         <input type="number" id="numeroLimite">
         <button onclick="consultarUsersConLimite()">Consultar</button>
+        <button onclick="mostrarUsuariosInversa()">Mostrar Usuarios en Orden Inverso</button>
       </div>
     
       <div id="resultado"></div>

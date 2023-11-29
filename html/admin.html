@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <title>Admin Api</title>
+</head>
+<body>
+    <nav class="menu">
+        <section class="menu__container">
+            <h1 class="menu__logo">SuPrimo</h1>
+
+            <ul class="menu__links">
+                <li class="menu__item">
+                    <a href="../index.html" class="menu__link">Home</a>
+                </li>
+    
+                <li class="menu__item menu__item--show">
+                    <a href="#" class="menu__link">Mi perfil<img src="../assets/arrow.svg" class="menu__arrow"></a>
+    
+                    <ul class="menu__nesting">
+                        <li class="menu__inside">
+                            <a href="areaPersonal.html" class="menu__link menu__link--inside">Datos</a>
+                        </li>
+                        <li class="menu__inside">
+                            <a href="admin.html" class="menu__link menu__link--inside">Admin API</button></a>
+                        </li>
+                        <li class="menu__inside">
+                            <a href="#" class="menu__link menu__link--inside" id="logoutButton">Logout</button></a>
+                        </li>
+                    </ul>
+                </li>
+    
+
+            </ul>
+            
+            <div class="menu__hamburguer">
+                <img src="../assets/menu.svg" class="menu__img">
+            </div>
+        </section>
+
+      
+    </nav>
+
+    <div id="container-admin">
+    <h1>Carritos</h1>
+    <div>
+
+        <button onclick="consultarTodos()">Consultar Todos</button>
+      </div>
+      <div>
+        <label for="numeroCarrito">ID del carrito:</label>
+        <input type="number" id="numeroCarrito">
+        <button onclick="consultarPorNumero()">Consultar</button>
+      </div>
+      <div>
+        <label for="numeroLimit">Cantidad de Productos a ver:</label>
+        <input type="number" id="numeroLimit">
+        <button onclick="consultarConLimite()">Consultar</button>
+      </div>
+      <div>
+        <label for="fechaInicio">Fecha de inicio:</label>
+        <input type="date" id="fechaInicio">
+        <label for="fechaFin">Fecha de fin:</label>
+        <input type="date" id="fechaFin">
+        <button onclick="consultarPorRangoFecha()">Consultar</button>
+      </div>
+    
+      <div class="container" id="resultados"></div>
+
+      <h2>Editar carritos</h2>
+      <form id="carritoForm">
+        <label for="userId">Usuario/ID Carrito:</label>
+        <input type="text" id="userId" name="userId" required>
+
+        <label for="date">Fecha (YYYY-MM-DD):</label>
+        <input type="text" id="date" name="date" pattern="\d{4}-\d{2}-\d{2}" required>
+        
+        <label for="productId">ID del Producto:</label>
+        <input type="text" id="productId" name="productId" required>
+
+        <label for="quantity">Cantidad:</label>
+        <input type="number" id="quantity" name="quantity" min="1" required>
+
+        <button type="button" onclick="AñadirProducto()">Añadir</button>
+        <button type="button" onclick="EditarProducto()">Editar</button>
+    </form>
+    
+
+      <h1>Usuarios</h1>
+      <div>
+        <label for="numeroLimit">Cantidad de usuarios a ver:</label>
+        <input type="number" id="numeroLimite">
+        <button onclick="consultarUsersConLimite()">Consultar</button>
+      </div>
+    
+      <div id="resultado"></div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+</body>
+</html>

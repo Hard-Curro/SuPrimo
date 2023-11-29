@@ -39,19 +39,16 @@ function crearTarjeta(product) {
 
   const price = document.createElement('p');
   price.classList.add('price');
-  price.textContent = `Precio: $${product.price}`;
+  price.textContent = product.price;
   card.appendChild(price);
 
-  const buyButton = document.createElement('button');
-  buyButton.textContent = 'Comprar';
-  buyButton.classList.add('agregar-carrito');
-  card.appendChild(buyButton);
-
-  // Agregar el evento onclick a la tarjeta
-    image.onclick = function() {
-    redirectToAnotherPage(product.id);
-  };
-
+  const agregarAlCarritoLink = document.createElement('a');
+  agregarAlCarritoLink.href = "#";
+  agregarAlCarritoLink.className = "agregar-carrito";
+  agregarAlCarritoLink.innerHTML = "Agregar al carrito";
+  agregarAlCarritoLink.setAttribute("data-id", product.id);
+  agregarAlCarritoLink.id = "lista-cursos";
+  card.appendChild(agregarAlCarritoLink);
 
 // Agregar el evento onclick a la imagen de la tarjeta
 image.onclick = function() {
@@ -208,3 +205,27 @@ productForm.addEventListener('submit', (e) => {
     })
     .catch(error => console.log(error));
 });
+
+function realizarSolicitud() {
+  // Obtener el valor del input
+  var numero = document.getElementById('numeroInput').value;
+
+  // Construir la URL con el número proporcionado
+  var url = `https://fakestoreapi.com/products?limit=${numero}`;
+
+  // Realizar la solicitud fetch
+  fetch(url)
+    .then(response => response.json())
+    .then(productsAPI => {
+      // Obtener los productos almacenados en el localStorage
+      const productosLocalStorage = JSON.parse(localStorage.getItem('productos')) || [];
+
+      // Filtrar los productos del localStorage por categoría
+      const productosLocalStoragePorCategoria = productosLocalStorage.filter(product => product.category.toLowerCase() === categoria.toLowerCase());
+
+      // Unificar los productos de la API y los productos del localStorage por categoría
+      const allProducts = [...productsAPI, ...productosLocalStoragePorCategoria];
+
+      // Mostrar todos los productos
+      mostrarProductos(allProducts);
+})}

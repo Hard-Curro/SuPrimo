@@ -36,21 +36,34 @@ registerForm.addEventListener('submit', async (e) => {
   };
 
   try {
-    let Users = JSON.parse(localStorage.getItem('users')) || [];
-    let UsersDeleted = JSON.parse(localStorage.getItem('usersDeleted')) || [];
-    const isUserRegistered = Users.some((user) => user.email === email);
-    if (isUserRegistered) {
-      return alert('El usuario ya está registrado');
+    let response = await fetch('https://fakestoreapi.com/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    });
+
+    if (response.ok) {
+      let Users = JSON.parse(localStorage.getItem('users')) || [];
+      let UsersDeleted = JSON.parse(localStorage.getItem('usersDeleted')) || [];
+      const isUserRegistered = Users.some((user) => user.email === email);
+      if (isUserRegistered) {
+        return alert('El usuario ya está registrado');
+      }
+      const deletedUserIndex = UsersDeleted.findIndex((user) => user.email === email);
+      if (deletedUserIndex !== -1) {
+        UsersDeleted.splice(deletedUserIndex, 1);
+        localStorage.setItem('usersDeleted', JSON.stringify(UsersDeleted));
+      }
+      Users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(Users));
+      alert('Usuario creado exitosamente');
+      window.location.href = 'login.html';
+    } else {
+      console.log('Error en la solicitud:', response.status);
+      alert('Error en la solicitud');
     }
-    const deletedUserIndex = UsersDeleted.findIndex((user) => user.email === email);
-    if (deletedUserIndex !== -1) {
-      UsersDeleted.splice(deletedUserIndex, 1);
-      localStorage.setItem('usersDeleted', JSON.stringify(UsersDeleted));
-    }
-    Users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(Users));
-    alert('Usuario creado exitosamente');
-    window.location.href = 'login.html';
   } catch (error) {
     console.log('Error en la solicitud:', error);
     alert('Error en la solicitud');

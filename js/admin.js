@@ -280,3 +280,27 @@ function EditarProducto() {
       console.error("Error al enviar la solicitud:", error);
     });
 }
+
+function mostrarCarritosInversa() {
+  limpiarResultados();
+  fetch('https://fakestoreapi.com/carts?sort=desc')
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((carrito) => {
+        mostrarResultadoEnTarjeta(carrito);
+      });
+    })
+    .catch((error) => console.error("Error:", error));
+}
+
+function mostrarUsuariosInversa() {
+  limpiarResultados();
+  // Modifica la URL según la estructura de la API, si es necesario
+  fetch('https://fakestoreapi.com/users?sort=desc')
+    .then((response) => response.json())
+    .then((data) => {
+      // Mostrar los resultados en tarjetas
+      mostrarTarjetas(data);
+    })
+    .catch((error) => console.error("Error al consultar la API:", error));
+}

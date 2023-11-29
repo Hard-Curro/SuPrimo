@@ -162,7 +162,7 @@ function mostrarTodosLosProductos() {
   const productosLocalStorage =
     JSON.parse(localStorage.getItem("productos")) || [];
 
-  fetch("https://fakestoreapi.com/products")
+  fetch("https://fakestoreapi.com/products?sort=desc")
     .then((response) => response.json())
     .then((productsAPI) => {
       // Combinar los productos de la API y los productos del localStorage
